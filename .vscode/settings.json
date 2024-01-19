@@ -1,0 +1,9 @@
+{
+    "editor.fontSize": 18,
+    "window.zoomLevel": -1,
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "prettier.bracketSameLine": true,
+    "editor.mouseWheelZoom": true,
+}
