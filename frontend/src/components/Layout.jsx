@@ -5,7 +5,7 @@ const dropdowns = [
   {
     href: '/',
     imgsrc: 'images/icons/sofa.svg',
-    name: 'Sofa',
+    name: 'Sofa-y',
   },
   {
     href: '/',
@@ -69,7 +69,7 @@ const Layout = () => {
             <img
               style={{
                 backgroundImage: `url(${
-                  process.env.PUBLIC_URL + 'images/logo.svg'
+                  'public/images/logo.svg'
                 })`,
               }}
               alt='Logo'
@@ -144,11 +144,11 @@ const Layout = () => {
             <div className='absolute w-full left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible'>
               {dropdowns.map((dropdown) => (
                 <Link
-                  key={dropdown.id}
-                  href={dropdown.link}
+                  key={dropdown.name}
+                  to={dropdown.link}
                   className='flex items-center px-6 py-3 hover:bg-gray-100 transition'>
                   <img
-                    src={process.env.PUBLIC_URL + `${dropdown.imgsrc}`}
+                    src={`public/${dropdown.imgsrc}`}
                     alt='sofa'
                     className='w-5 h-5 object-contain'
                   />
@@ -164,14 +164,15 @@ const Layout = () => {
             <div className='flex items-center space-x-6 capitalize'>
               {navlinks.map((navlink) => (
                 <Link
-                  href='navlink.href'
+                  to={navlink.href}
+                  key={navlink.name}
                   className='text-gray-200 hover:text-white transition'>
                   {navlink.name}
                 </Link>
               ))}
             </div>
             <Link
-              href='pages/login.html'
+              to='login'
               className='text-gray-200 hover:text-white transition'>
               Login
             </Link>

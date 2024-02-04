@@ -23,7 +23,7 @@ const ProfileScreen = ({ match }) => {
           <div className="px-4 py-3 shadow flex items-center gap-4">
             <div className="flex-shrink-0">
               <img
-                src={process.env.PUBLIC_URL + "images/avatar.png"}
+                src={"public/images/avatar.png"}
                 alt="profile"
                 className="rounded-full w-14 h-14 border border-gray-200 p-1 object-cover"
               />

@@ -1,0 +1,147 @@
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+export const getCartItems = createAsyncThunk('cart/getCartItems', async () => {
+  const { data } = await axios.get(
+    `http://localhost:5000/api/products/65a9dc2f302203edc0b100da`
+  );
+
+  return data;
+});
+async function create(qty) {
+  const addToCart = createAction('createCart');
+  addToCart({
+    product: data._id,
+    name: data.name,
+    image: data.image,
+    price: data.price,
+    countInStock: data.countInStock,
+    qty,
+  });
+}
+
+const lc = async () => {
+  return async (dispatch, getState) => {
+    const currentState = getState();
+
+    localStorage.setItem(
+      'cartItems',
+      JSON.stringify(getState().cart.cartItems)
+    );
+
+    console.log('st', currentState);
+  };
+};
+
+const initialState = {
+  status: null,
+  data: [],
+};
+
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
+  reducers: {
+    createCart(state, action) {
+      let items = action.payload;
+      const existItem = state.cartItems.find((x) => x.product === item.product);
+
+      if (existItem) {
+        return {
+          ...state,
+          cartItems: state.cartItems.map((x) =>
+            x.product === existItem.product ? item : x
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cartItems: [...state.cartItems, item],
+        };
+      }
+    },
+  },
+  extraReducers: (builder) => {
+    // Use `extraReducers` to handle actions that were generated
+    // _outside_ of the slice, such as thunks or in other slices
+
+    builder
+      .addCase(getCartItems.pending, (state) => {
+        state.status = 'Pending';
+        console.log('Pending');
+      })
+      .addCase(getCartItems.fulfilled, (state, action) => {
+        state.status = 'Fulfilled';
+        state.data = action.payload;
+        console.log('FullField');
+      })
+      .addCase(getCartItems.rejected, (state) => {
+        state.status = 'Rejected';
+        console.log('Rejected');
+      });
+  },
+});
+
+export const { createCart } = cartSlice.actions;
+export default cartSlice.reducer;
+// const { actions, reducer } = cartSlice;
+// export const { createPost, createCart } = actions;
+// export default reducer;
+// console.log(cartSlice);
+
+// Later, dispatch the thunk as needed in the app
+// dispatch(fetchUserById(123));
+
+// const data = {
+//   _id: '65a9dc2f302203edc0b100da',
+//   user: '65a9dc2f302203edc0b100d6',
+//   name: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+//   image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+//   brand: 'Apple',
+//   category: "men's clothing",
+//   description:
+//     'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
+//   rating: 3.9,
+//   numReview: 4,
+//   price: 109.95,
+//   countInStock: 3,
+//   review: [],
+//   __v: 0,
+//   createdAt: '2024-01-19T02:19:27.494Z',
+//   updatedAt: '2024-01-19T02:19:27.494Z',
+// };
+/*
+{
+    name: 'posts',
+    actions : {
+        createPost,
+        updatePost,
+        deletePost,
+    },
+    reducer
+}
+*/
+// console.log(cartAddItem('65a9dc2f302203edc0b100da', 2));
+// if (productId) {
+//   console.log(cartAddItem(1, 2));
+// }
+
+// let qty = 2;
+// console.log(createPost({ id: 123, title: 'Hello World' }));
+
+// console.log(
+//   createCart({
+//     product: data._id,
+//     name: data.name,
+//     image: data.image,
+//     price: data.price,
+//     countInStock: data.countInStock,
+//     qty,
+//   })
+// );
+
+// {type : "posts/createPost", payload : {id : 123, title : "Hello World"}}
+// console.log(cartAddItem(1, 2));
